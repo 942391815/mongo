@@ -54,6 +54,16 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public T findByPk(String id, Class<T> obj) {
-		return (T) template.find(new Query(Criteria.where("id").is(id)), obj);
+		if(id==null||"".equals(id.trim())){
+			throw new RuntimeException("id Can not be null!");
+		}
+		List<T> resultList = template.find(new Query(Criteria.where("_id").is(id)), obj);
+		if(resultList!=null&&resultList.size()>1){
+			throw new RuntimeException("pk can not duplicate !");
+		}
+		if(resultList.size()>0){
+			return resultList.get(0);
+		}
+		return null;
 	}
 }
