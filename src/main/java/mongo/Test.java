@@ -1,6 +1,5 @@
 package mongo;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -9,8 +8,6 @@ import java.util.Map;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.fastjson.JSONObject;
@@ -41,16 +38,11 @@ public class Test {
 		System.out.println(map);
 	}
 	public static void insert(){
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		MongoTemplate template = (MongoTemplate)context.getBean("mongoTemplate");
-		JdbcTemplate jdbcTemplate = (JdbcTemplate)context.getBean("jdbcTemplate");
-		
-		List<Map<String, Object>> queryForList = jdbcTemplate.queryForList("select * from template_approval_instance");
-		for(Map each:queryForList){
-			String eachObj = JSONObject.toJSON(each).toString();
-			System.out.println(each);
-			TemplateApprovalInstance bean = (TemplateApprovalInstance)JSONObject.parseObject(eachObj, TemplateApprovalInstance.class);
-			template.insert(bean);
-		}
+//		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+////		CommonQuery bean = (CommonQuery)context.getBean("commonQuery");
+//		TemplateApproval approval = new TemplateApproval();
+//		approval.setId("004f64caaebd11e598bcfa163e84de1b");
+//		List findByCondtion = bean.findByCondtion(approval);
+//		System.out.println(findByCondtion.get(0));
 	}
 }

@@ -51,4 +51,9 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 		}
 		return (List<T>) template.find(new Query(criteria), ob.getClass());
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public T findByPk(String id, Class<T> obj) {
+		return (T) template.find(new Query(Criteria.where("id").is(id)), obj);
+	}
 }
