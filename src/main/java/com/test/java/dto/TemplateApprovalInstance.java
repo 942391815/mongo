@@ -1,10 +1,11 @@
 package com.test.java.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class TemplateApprovalInstance {
+public class TemplateApprovalInstance implements Serializable{
 	@JSONField(name="ID")
 	private String id;
 	@JSONField(name="APPROVAL_ID")

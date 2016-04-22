@@ -1,4 +1,4 @@
-package com.test.java.mongo.query;
+package com.test.java.mongo.base;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -6,16 +6,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Service;
 
 import com.test.java.utils.Tools;
 
-public class CommonQuery<T> {
-	
+@Service
+public class BaseServiceImpl<T> implements BaseService<T>{
+	@Autowired
 	private MongoTemplate template;
 	
+	@SuppressWarnings("unchecked")
 	public List<T> findByCondtion(T ob) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Class clazz = ob.getClass();
