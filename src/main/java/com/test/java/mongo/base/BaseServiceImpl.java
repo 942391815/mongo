@@ -49,7 +49,10 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 				i++;
 			}
 		}
-		return (List<T>) template.find(new Query(criteria), ob.getClass());
+		if(criteria!=null){
+			return (List<T>) template.find(new Query(criteria), ob.getClass());
+		}
+		return (List<T>)template.findAll(ob.getClass());
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -65,5 +68,21 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 			return resultList.get(0);
 		}
 		return null;
+	}
+	@Override
+	public void deleteByPk(String id, Class<T> obj) {
+		template.remove(new Query(Criteria.where("_id").is(id)), obj);
+	}
+	@Override
+	public int getCount(T obj) {
+		return findByCondtion(obj).size();
+	}
+	@Override
+	public void insert(T obj) {
+		template.insert(obj);
+	}
+	@Override
+	public void updateByPk(T obj) {
+//		template.update
 	}
 }
