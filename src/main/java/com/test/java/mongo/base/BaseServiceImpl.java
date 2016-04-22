@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.test.java.utils.Tools;
@@ -20,20 +21,8 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	private MongoTemplate template;
 	
 	@SuppressWarnings("unchecked")
-	public List<T> findByCondtion(T ob) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		Class clazz = ob.getClass();
-		Method[] declaredMethods = clazz.getDeclaredMethods();
-		for (Method each : declaredMethods) {
-			if (each.getName().startsWith("get")) {
-				String fieldName = Tools.converFirstCharToLower(each.getName().substring(3));
-				try {
-					map.put(fieldName, each.invoke(ob, null));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	public List<T> findByCondtion(T obj) {
+		Map<String,Object> map = ObjectToMap(obj);
 		Iterator<String> iterator = map.keySet().iterator();
 		int i = 0;
 		Criteria criteria = null;
@@ -50,9 +39,9 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 			}
 		}
 		if(criteria!=null){
-			return (List<T>) template.find(new Query(criteria), ob.getClass());
+			return (List<T>) template.find(new Query(criteria), obj.getClass());
 		}
-		return (List<T>)template.findAll(ob.getClass());
+		return (List<T>)template.findAll(obj.getClass());
 	}
 	@SuppressWarnings("unchecked")
 	@Override
@@ -83,6 +72,36 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	}
 	@Override
 	public void updateByPk(T obj) {
-//		template.update
+		Update update = new Update();
+		Map<String,Object> map = ObjectToMap(obj);
+		if(map.get("id")==null){
+			throw new RuntimeException("id can not be null ");
+		}
+		String id = map.get("id").toString();
+		Iterator<String> iterator = map.keySet().iterator();
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			Object value = map.get(key);
+			if (value != null) {
+				update.set(key, value);
+			}
+		}
+		template.updateFirst(new Query(Criteria.where("_id").is(id)), update, obj.getClass());
+	}
+	private Map<String, Object> ObjectToMap(T obj){
+		Map<String, Object> map = new HashMap<String, Object>();
+		Class clazz = obj.getClass();
+		Method[] declaredMethods = clazz.getDeclaredMethods();
+		for (Method each : declaredMethods) {
+			if (each.getName().startsWith("get")) {
+				String fieldName = Tools.converFirstCharToLower(each.getName().substring(3));
+				try {
+					map.put(fieldName, each.invoke(obj,null));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return map;
 	}
 }
