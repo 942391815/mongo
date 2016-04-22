@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.test.java.utils.Tools;
 
@@ -46,7 +47,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public T findByPk(String id, Class<T> obj) {
-		if(id==null||"".equals(id.trim())){
+		if(StringUtils.isEmpty(id)){
 			throw new RuntimeException("id Can not be null!");
 		}
 		List<T> resultList = template.find(new Query(Criteria.where("_id").is(id)), obj);
@@ -74,7 +75,7 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 	public void updateByPk(T obj) {
 		Update update = new Update();
 		Map<String,Object> map = ObjectToMap(obj);
-		if(map.get("id")==null){
+		if(StringUtils.isEmpty(map.get("id"))){
 			throw new RuntimeException("id can not be null ");
 		}
 		String id = map.get("id").toString();
