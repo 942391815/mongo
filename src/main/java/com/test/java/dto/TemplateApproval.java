@@ -15,42 +15,36 @@ public class TemplateApproval implements Serializable{
      * @描述:     
      * @字段:ID CHAR(32)  
      */	
-	@JSONField(name="ID")
 	private String id;
 
 	/**
      * @描述:流程模板名称
      * @字段:CUSTOM_NAME VARCHAR(200)
      */
-	@JSONField(name="CUSTOM_NAME")
 	private String customName;
 
 	/**
      * @描述:定义过要启动的流程模板id
      * @字段:CUSTOM_ID VARCHAR(32)
      */
-	@JSONField(name="CUSTOM_ID")
 	private String customId;
 
 	/**
      * @描述:交易平台模板id
      * @字段:TEMPLATE_ID VARCHAR(32)
      */
-	@JSONField(name="TEMPLATE_ID")
 	private String templateId;
 
 	/**
      * @描述:工作流模板请求唯一标示
      * @字段:CUSTOM_UNIQUE_ID VARCHAR(32)
      */
-	@JSONField(name="CUSTOM_UNIQUE_ID")
 	private String customUniqueId;
 
 	/**
      * @描述:租户id
      * @字段:TENANT_ID CHAR(32)
      */
-	@JSONField(name="TENANT_ID")
 	private String tenantId;
 
 
@@ -58,13 +52,11 @@ public class TemplateApproval implements Serializable{
      * @描述:状态(0=无效,1=有效,2=停用)
      * @字段:STATUS TINYINT(3)
      */
-	@JSONField(name="STATUS")
 	private Integer status;
 	/**
      * @描述:模板类型
      * @字段: TYPE INT(10)
      */
-	@JSONField(name="TYPE")
 	private Integer type;
 
 
@@ -72,7 +64,6 @@ public class TemplateApproval implements Serializable{
      * @描述:流程类型 0 财务 1，业务 2 项目 3 文档
      * @字段:TYPE TINYINT(3)
      */
-	@JSONField(name="ORG_CODE")
 	private Long orgCode;
 
 
@@ -80,42 +71,36 @@ public class TemplateApproval implements Serializable{
      * @描述:
      * @字段:CREATE_USER_ID CHAR(32)
      */
-	@JSONField(name="CREATE_USER_ID")
 	private String createUserId;
 
 	/**
      * @描述:
      * @字段:CREATE_USER_NAME CHAR(100)
      */
-	@JSONField(name="CREATE_USER_NAME")
 	private String createUserName;
 
 	/**
      * @描述:
      * @字段:CREATE_TIME DATETIME(19)
      */
-	@JSONField(name="CREATE_TIME")
 	private Date createTime;
 
 	/**
      * @描述:
      * @字段:UPDATE_USER_ID CHAR(32)
      */
-	@JSONField(name="UPDATE_USER_ID")
 	private String updateUserId;
 
 	/**
      * @描述:
      * @字段:UPDATE_USER_NAME CHAR(100)
      */
-	@JSONField(name="UPDATE_USER_NAME")
 	private String updateUserName;
 
 	/**
      * @描述:
      * @字段:UPDATE_TIME DATETIME(19)
      */
-	@JSONField(name="UPDATE_TIME")
 	private Date updateTime;
 
 	public String getCreateUserId() {
