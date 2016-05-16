@@ -17,10 +17,10 @@ public class TestMapReduce {
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		MongoTemplate mongoTemplate = (MongoTemplate)context.getBean("mongoTemplate");
-		String mapFunction = "var map =function(){"+
+		String mapFunction = "function(){"+
 		"emit(this.tenantId,1);"+
 		"}";
-		String reduceFunction="var reduce = function(key,values){"+
+		String reduceFunction="function(key,values){"+
 		"var cnt=0;"+   
 		"values.forEach(function(val){"+ 
 		    "cnt = cnt+val;"+
@@ -29,6 +29,13 @@ public class TestMapReduce {
 	"}";
 		MapReduceOutput mapReduce = mongoTemplate.getCollection("templateApproval").mapReduce(mapFunction, reduceFunction, "result", null);
 		mapReduce.getCommand();
+		
+//		var cc = {
+//			    "mapreduce": "templateApproval",
+//			    "map": " function(){emit(this.tenantId,1);}",
+//			    "reduce": "function(key,values){var cnt=0;values.forEach(function(val){cnt = cnt+val;});return cnt;}",
+//			    "out":"result"
+//			}
 		
 //		DBCollection coll = mongoTemplate.getCollection("templateApproval");
 //		MapReduceCommand mapcmd = new MapReduceCommand(coll, mapFunction, reduceFunction,
