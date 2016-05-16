@@ -3,54 +3,30 @@ package com.test.java.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.alibaba.fastjson.annotation.JSONField;
 
 public class TemplateApprovalInstance implements Serializable{
-	@JSONField(name="ID")
 	private String id;
-	@JSONField(name="APPROVAL_ID")
 	private String approvalId;
-	@JSONField(name="PROCESS_ID")
 	private String processId;
-	@JSONField(name="PROCESS_NAME")
 	private String processName;
-	@JSONField(name="END_TYPE")
 	private Integer endType;
-	@JSONField(name="CURRENT_NODE")
 	private Integer currentNode;
-	@JSONField(name="ROUND")
 	private Integer round;
-	@JSONField(name="STATUS")
 	private Integer status;
-	@JSONField(name="BUSINESS_ID")
 	private String businessId;
-	@JSONField(name="BUSINESS_DATA")
 	private String businessData;
-	@JSONField(name="STORE_DATA")
 	private String storeData;
-	@JSONField(name="CALLBACK_URL")
 	private String callbackUrl;
-	@JSONField(name="CREATE_USER_ID")
 	private String createUserId;
-	@JSONField(name="CREATE_USER_NAME")
 	private String createUserName;
-	@JSONField(name="CREATE_TIME")
 	private Date createTime;
-	@JSONField(name="UPDATE_USER_ID")
 	private String updateUserId;
-	@JSONField(name="UPDATE_USER_NAME")
 	private String updateUserName;
-	@JSONField(name="UPDATE_TIME")
 	private Date updateTime;
-	@JSONField(name="TENANT_ID")
 	private String tenantId;
-	@JSONField(name="ORG_CODE")
 	private Long orgCode;
-	@JSONField(name="APPROVAL_NODE_CODE")
 	private String approvalNodeCode;
-	@JSONField(name="WORK_FLOW")
 	private String workFlow;
-	@JSONField(name="DATA_KEY")
 	private String dataKey;
 	
 	public TemplateApprovalInstance(){
