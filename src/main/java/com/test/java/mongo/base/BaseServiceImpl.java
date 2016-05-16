@@ -91,20 +91,6 @@ public class BaseServiceImpl<T> implements BaseService<T>{
 		template.updateFirst(new Query(Criteria.where("_id").is(id)), update, obj.getClass());
 	}
 	private Map<String, Object> ObjectToMap(T obj){
-		return (Map<String, Object>) JSONObject.parseArray(JSONObject.toJSON(obj).toString(),Map.class);
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		Class clazz = obj.getClass();
-//		Method[] declaredMethods = clazz.getDeclaredMethods();
-//		for (Method each : declaredMethods) {
-//			if (each.getName().startsWith("get")) {
-//				String fieldName = Tools.converFirstCharToLower(each.getName().substring(3));
-//				try {
-//					map.put(fieldName, each.invoke(obj,null));
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return map;
+		return (Map<String, Object>) JSONObject.parseObject(JSONObject.toJSON(obj).toString(),Map.class);
 	}
 }
