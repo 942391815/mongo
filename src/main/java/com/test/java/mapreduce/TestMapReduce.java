@@ -28,16 +28,6 @@ public class TestMapReduce {
 		"});"+
 		"return cnt;"+
 	"}";
-//		MapReduceOutput mapReduce = mongoTemplate.getCollection("user").mapReduce(mapFunction, reduceFunction, "result", null);
-//		mapReduce.getCommand();
-		
-//		var cc = {
-//			    "mapreduce": "templateApproval",
-//			    "map": " function(){emit(this.tenantId,1);}",
-//			    "reduce": "function(key,values){var cnt=0;values.forEach(function(val){cnt = cnt+val;});return cnt;}",
-//			    "out":"result"
-//			}
-		
 		DBCollection coll = mongoTemplate.getCollection("user");
 		MapReduceCommand mapcmd = new MapReduceCommand(coll, mapFunction, reduceFunction,
 				"result", MapReduceCommand.OutputType.REPLACE, null);
