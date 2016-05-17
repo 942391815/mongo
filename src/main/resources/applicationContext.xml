@@ -2,8 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/data/mongo     
+          				http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
 						http://www.springframework.org/schema/context
 				        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
@@ -17,18 +20,11 @@
 		<property name="port" value="27017" />
 	</bean>
 	
-	 <!-- 数据源定义,使用dbcp数据源 -->  
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">  
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>  
-        <property name="url" value="jdbc:mysql://localhost:3306/test"></property>  
-        <property name="username" value="root"></property>  
-        <property name="password" value="root"></property>  
-    </bean>  
-      
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" abstract="false"  
-        lazy-init="false" autowire="default" >  
-        <property name="dataSource">  
-            <ref bean="dataSource" />  
-        </property>  
-    </bean>  
+	<mongo:db-factory host="192.168.0.128" port="27017" dbname="dfs" />
+	<mongo:mapping-converter id="converter" db-factory-ref="mongoDbFactory"/>
+	<bean id="gridFsTemplate" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
+	  <constructor-arg ref="mongoDbFactory"/>
+	  <constructor-arg ref="converter"/>
+	</bean>
+	
 </beans>
