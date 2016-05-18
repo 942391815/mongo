@@ -13,16 +13,16 @@ public class TestMapReduce {
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		MongoTemplate mongoTemplate = (MongoTemplate)context.getBean("mongoTemplate");
 		String mapFunction = "function(){"+
-		"emit(this.name,1);"+
-		"}";
+							"emit(this.tenantId,1);"+
+							"}";
 		String reduceFunction="function(key,values){"+
-		"var cnt=0;"+   
-		"values.forEach(function(val){"+ 
-		    "cnt = cnt+val;"+
-		"});"+
-		"return cnt;"+
-	"}";
-		DBCollection coll = mongoTemplate.getCollection("user");
+									"var cnt=0;"+   
+									"values.forEach(function(val){"+ 
+									    "cnt = cnt+val;"+
+									"});"+
+									"return cnt;"+
+								"}";
+		DBCollection coll = mongoTemplate.getCollection("templateApproval");
 		MapReduceCommand mapcmd = new MapReduceCommand(coll, mapFunction, reduceFunction,
 				"result", MapReduceCommand.OutputType.REPLACE, null);
 		MapReduceOutput cars = coll.mapReduce(mapcmd);
