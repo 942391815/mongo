@@ -34,4 +34,8 @@ public class GridFsService {
 	public List<GridFSDBFile> findFile(Query query){
 		return gridFsTemplate.find(query);
 	}
+	public InputStream down(Query query){
+		GridFSDBFile file = gridFsTemplate.findOne(query);
+		return file.getInputStream();
+	} 
 }
