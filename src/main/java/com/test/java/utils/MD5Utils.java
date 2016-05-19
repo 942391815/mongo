@@ -47,6 +47,16 @@ public class MD5Utils {
 		String md5 = DigestUtils.md5Hex(IOUtils.toByteArray(fis));  
 		IOUtils.closeQuietly(fis);  
 		System.out.println("MD5:"+md5); 
+		
+		String path1="D:\\1.exe";
+		
+		String v1 = getMd5ByFile(new File(path1));
+		System.out.println("MD5:"+v1.toUpperCase());
+		
+		FileInputStream fis1= new FileInputStream(path1);  
+		String md51 = DigestUtils.md5Hex(IOUtils.toByteArray(fis1));  
+		IOUtils.closeQuietly(fis1);  
+		System.out.println("MD5:"+md51); 
 		//fc936ee62985ee1130bc5096af394276
 		//System.out.println("MD5:"+DigestUtils.md5Hex("WANGQIUYUN"));
 	}

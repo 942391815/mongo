@@ -10,17 +10,17 @@
 						http://www.springframework.org/schema/context
 				        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:component-scan base-package="com.test.java.mongo"/>    
+	<context:component-scan base-package="com.test.java.mongo,com.test.java.gridfs"/>    
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongo" ref="mongo" />
 		<constructor-arg name="databaseName" value="test" />
 	</bean>
 	<bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
-		<property name="host" value="192.168.0.128" />
+		<property name="host" value="192.168.17.222" />
 		<property name="port" value="27017" />
 	</bean>
 	
-	<mongo:db-factory host="192.168.0.128" port="27017" dbname="dfs" />
+	<mongo:db-factory host="192.168.17.222" port="27017" dbname="dfs" />
 	<mongo:mapping-converter id="converter" db-factory-ref="mongoDbFactory"/>
 	<bean id="gridFsTemplate" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
 	  <constructor-arg ref="mongoDbFactory"/>
