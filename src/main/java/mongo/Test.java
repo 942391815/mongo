@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.fastjson.JSONObject;
-import com.test.java.dto.Person;
 import com.test.java.dto.TemplateApproval;
 import com.test.java.mongo.service.templateapproval.TemplateApprovalService;
 

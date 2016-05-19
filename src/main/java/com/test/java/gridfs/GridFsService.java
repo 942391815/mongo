@@ -19,26 +19,33 @@ import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
 import com.test.java.utils.MD5Utils;
-
+import com.test.java.dto.User;
+import com.test.java.mongo.base.BaseService;
 @Service
 public class GridFsService {
 	@Autowired
 	private GridFsTemplate gridFsTemplate;
-	public GridFSFile uploadFile(File file,Map metaData) throws Exception{
-		FileInputStream fos = new FileInputStream(file);
-		DBObject obj = new BasicDBObject();
-		obj.putAll(metaData);
-		return gridFsTemplate.store(fos,metaData);
+	@Autowired
+	private BaseService baseServiceImpl;
+	
+	public GridFSFile uploadFile(File file,String user) throws Exception{
+		FileInputStream fis = new FileInputStream(file);
+		return uploadFile(fis,user,file.getName());
 	}
-	public GridFSFile uploadFile(InputStream inputStream,Map metaData) throws Exception{
+	public GridFSFile uploadFile(InputStream inputStream,String user,String fileName) throws Exception{
+		GridFSFile uploadFile = null;
+		/**
+		 * 上传文件计算文件的md5值，如果文件值存在则
+		 */
 		String md5 = DigestUtils.md5Hex(IOUtils.toByteArray(inputStream));
-		List<GridFSDBFile> result = gridFsTemplate.find(new Query(Criteria.where("md5").is(md5)));
-//		if(result!=null){
-//		}else{
-			DBObject obj = new BasicDBObject();
-			obj.putAll(metaData);
-			return gridFsTemplate.store(inputStream,metaData);
-//		}
+		List<GridFSDBFile> fileList = findFile(new Query(Criteria.where("md5").is(md5)));
+		if(fileList!=null&&fileList.size()>0){
+			uploadFile=fileList.get(0);
+		}else{
+			uploadFile = gridFsTemplate.store(inputStream, fileName);
+		}
+		baseServiceImpl.insert(getMetaDataUser(uploadFile,user));
+		return uploadFile;
 	}
 	public List<GridFSDBFile> findFile(Query query){
 		return gridFsTemplate.find(query);
@@ -46,5 +53,13 @@ public class GridFsService {
 	public InputStream down(Query query){
 		GridFSDBFile file = gridFsTemplate.findOne(query);
 		return file.getInputStream();
-	} 
+	}
+	private User getMetaDataUser(GridFSFile file,String user){
+		User fileUser = new User();
+		fileUser.setMd5(file.get("md5").toString());
+		fileUser.setFileId(file.get("_id").toString());
+		fileUser.setUsernId(user);
+		baseServiceImpl.insert(fileUser);
+		return fileUser;
+	}
 }

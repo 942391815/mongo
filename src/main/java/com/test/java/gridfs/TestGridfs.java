@@ -18,14 +18,10 @@ public class TestGridfs {
 		Map<String,String> metaData = new HashMap<String,String>();
 		metaData.put("user", "micheal");
 		long timeBegin = System.currentTimeMillis();
-		gridFsService.uploadFile(file, metaData);
+//		gridFsService.uploadFile(file, metaData);
 		long end = System.currentTimeMillis();
 		System.out.println(end-timeBegin);
 		List<GridFSDBFile> findFileList = gridFsService.findFile(null);
-		for(int i=0;i<findFileList.size();i++){
-			GridFSDBFile each = findFileList.get(i);
-			System.out.println(each);
-		}
 //		InputStream down = gridFsService.down(new Query(Criteria.where("md5").is("fc936ee62985ee1130bc5096af394276")));
 //		FileOutputStream fos = new FileOutputStream(new File("d:\\1"));
 //		byte [] size = new byte[1024];

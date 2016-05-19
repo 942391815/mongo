@@ -26,5 +26,4 @@
 	  <constructor-arg ref="mongoDbFactory"/>
 	  <constructor-arg ref="converter"/>
 	</bean>
-	
 </beans>
