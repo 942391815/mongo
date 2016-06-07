@@ -120,4 +120,25 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		return (Map<String, Object>) JSONObject.parseObject(JSONObject.toJSON(obj).toString(),
 				Map.class);
 	}
+
+	@Override
+	public List<T> findByCondtionByMap(Map<String, Object> param, Class<T> clazz) {
+		Iterator<String> iterator = param.keySet().iterator();
+		int i = 0;
+		Criteria criteria = null;
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			Object value = param.get(key);
+				if (i > 0) {
+					criteria.and(key).is(value);
+				} else {
+					criteria = Criteria.where(key).is(value);
+				}
+				i++;
+		}
+		if (criteria != null) {
+			return (List<T>) template.find(new Query(criteria), clazz);
+		}
+		return (List<T>) template.findAll(clazz);
+	}
 }
