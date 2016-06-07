@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
@@ -14,19 +13,16 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
-import com.test.java.utils.MD5Utils;
 import com.test.java.dto.User;
-import com.test.java.mongo.base.BaseService;
+import com.test.java.mongo.service.user.UserService;
 @Service
 public class GridFsService {
 	@Autowired
 	private GridFsTemplate gridFsTemplate;
 	@Autowired
-	private BaseService baseServiceImpl;
+	private UserService userService;
 	
 	public GridFSFile uploadFile(File file,String user) throws Exception{
 		FileInputStream fis = new FileInputStream(file);
@@ -44,7 +40,7 @@ public class GridFsService {
 		}else{
 			uploadFile = gridFsTemplate.store(inputStream, fileName);
 		}
-		baseServiceImpl.insert(getMetaDataUser(uploadFile,user));
+		getMetaDataUser(uploadFile,user);
 		return uploadFile;
 	}
 	public List<GridFSDBFile> findFile(Query query){
@@ -54,12 +50,14 @@ public class GridFsService {
 		GridFSDBFile file = gridFsTemplate.findOne(query);
 		return file.getInputStream();
 	}
-	private User getMetaDataUser(GridFSFile file,String user){
+	private void getMetaDataUser(GridFSFile file,String user){
 		User fileUser = new User();
 		fileUser.setMd5(file.get("md5").toString());
 		fileUser.setFileId(file.get("_id").toString());
 		fileUser.setUsernId(user);
-		baseServiceImpl.insert(fileUser);
-		return fileUser;
+		List<User> queryResult = userService.findByCondtion(fileUser);
+		if(queryResult==null||queryResult.size()<1){
+			userService.insert(fileUser);
+		}
 	}
 }

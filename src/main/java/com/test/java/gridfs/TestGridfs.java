@@ -14,14 +14,14 @@ public class TestGridfs {
 	public static void main(String[] args) throws Exception{
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		GridFsService gridFsService = (GridFsService)context.getBean("gridFsService");
-		File file = new File("D:\\PageOffice_3.0.0.6_JAVA .rar");
-		Map<String,String> metaData = new HashMap<String,String>();
-		metaData.put("user", "micheal");
-		long timeBegin = System.currentTimeMillis();
+//		File file = new File("D:\\PageOffice_3.0.0.6_JAVA .rar");
+//		Map<String,String> metaData = new HashMap<String,String>();
+//		metaData.put("user", "micheal");
+//		long timeBegin = System.currentTimeMillis();
 //		gridFsService.uploadFile(file, metaData);
-		long end = System.currentTimeMillis();
-		System.out.println(end-timeBegin);
-		List<GridFSDBFile> findFileList = gridFsService.findFile(null);
+//		long end = System.currentTimeMillis();
+//		System.out.println(end-timeBegin);
+//		List<GridFSDBFile> findFileList = gridFsService.findFile(null);
 //		InputStream down = gridFsService.down(new Query(Criteria.where("md5").is("fc936ee62985ee1130bc5096af394276")));
 //		FileOutputStream fos = new FileOutputStream(new File("d:\\1"));
 //		byte [] size = new byte[1024];
