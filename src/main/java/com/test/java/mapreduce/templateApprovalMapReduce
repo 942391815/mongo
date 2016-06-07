@@ -1,0 +1,22 @@
+var map=function(){
+	var status=this.status;
+	var endType=this.endType;
+	if(status==1){
+		if(endType==0){
+			status=1;
+		}else if(endType==1){
+			status=2;
+		}else if(endType==2){
+			status=3;
+		}
+	}
+	emit(status,1);
+}
+
+var reduce=function(key,values){
+	var cnt=0;   
+	values.forEach(function(val){cnt = cnt+val});
+	return cnt;
+}
+
+db.templateApprovalInstance.mapReduce(map,reduce,{out:"result"})
